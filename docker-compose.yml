@@ -29,6 +29,8 @@ services:
         . ~/.bashrc
         nvm install 18
         nvm use 18
+        echo "ls -la"
+        ls -la
         npm install
         npm run build
   mysql:
