@@ -1,7 +1,7 @@
 services:
   web: 
-    image: php:8.2-fpm
-    working_dir: /var/www/html
+    build:
+      context: .
     volumes:
       - '.:/var/www/html'
     ports:
@@ -18,21 +18,17 @@ services:
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - GOOGLE_SYNC_FEATURE=${GOOGLE_SYNC_FEATURE:-false}
-    command: 
-      - /bin/sh
-      - -c
-      - |
-        apt update && apt install -y curl
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-        export NVM_DIR="$HOME/.nvm"
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-        . ~/.bashrc
-        nvm install 18
-        nvm use 18
-        echo "ls -la"
-        ls -la
-        npm install
-        npm run build
+    depends_on:
+      - mysql
+      - mailpit
+      - swagger-ui
+      - baikal
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 5s
   mysql:
     image: 'mysql:8.0'
     volumes:
