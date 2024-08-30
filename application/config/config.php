@@ -30,7 +30,7 @@ if ($request_uri === '.') {
     $request_uri = '';
 }
 
-$config['base_url'] = trim($protocol . $domain . $request_uri, '/');
+$config['base_url'] = !is_cli() ? trim($protocol . $domain . $request_uri, '/') : Config::BASE_URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -125,9 +125,11 @@ $config['language_codes'] = $languages;
 
 $language_code = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) : 'en';
 
-$config['language'] = isset($_SERVER['HTTP_ACCEPT_LANGUAGE'], $languages[$language_code])
-    ? $languages[$language_code]
-    : Config::LANGUAGE;
+$config['language'] =
+    $_GET['language'] ??
+    (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'], $languages[$language_code])
+        ? $languages[$language_code]
+        : Config::LANGUAGE);
 
 $config['language_code'] = array_search($config['language'], $languages) ?: 'en';
 
