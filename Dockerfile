@@ -1,6 +1,6 @@
 FROM composer:2.7.1
 
-FROM php:8.3.3-fpm-alpine3.
+FROM php:8.3-fpm
 
 RUN apt-get update && apt-get install -y \
 git \
