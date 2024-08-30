@@ -47,13 +47,6 @@ services:
       - MYSQL_DATABASE=${SERVICE_DATABASE_MYSQL}
       - MYSQL_USER=${SERVICE_USER_MYSQL}
       - MYSQL_PASSWORD=${SERVICE_PASSWORD_MYSQL}
-
-  mailpit:
-    image: 'axllent/mailpit:v1.7'
-    ports:
-      - '8025:8025'
-      - '1025:1025'
-
   swagger-ui:
     platform: linux/amd64
     image: swaggerapi/swagger-ui:v5.10.5
