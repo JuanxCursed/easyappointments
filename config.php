@@ -47,7 +47,7 @@ class Config
     // GOOGLE CALENDAR SYNC
     // ------------------------------------------------------------------------
 
-    const GOOGLE_SYNC_FEATURE = false; // Enter TRUE or FALSE
-    const GOOGLE_CLIENT_ID = '';
-    const GOOGLE_CLIENT_SECRET = '';
+    const GOOGLE_SYNC_FEATURE = getenv('GOOGLE_SYNC_FEATURE'); 
+    const GOOGLE_CLIENT_ID = getenv('GOOGLE_CLIENT_ID');
+    const GOOGLE_CLIENT_SECRET = getenv('GOOGLE_CLIENT_SECRET');
 }
