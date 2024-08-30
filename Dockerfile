@@ -1,4 +1,6 @@
-FROM php:8.3-fpm
+FROM composer:2.7.1
+
+FROM php:8.3.3-fpm-alpine3.
 
 RUN apt-get update && apt-get install -y \
 git \
@@ -16,7 +18,17 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN docker-php-ext-install pdo_mysql
+
+COPY --chown=www-data:www-data . /var/www/html
+
+COPY --from=0 /usr/bin/composer /usr/bin/composer
+
+USER www-data
+
+RUN composer install --no-dev
+
+USER root
 
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
@@ -37,7 +49,3 @@ RUN composer install
 
 RUN . "$NVM_DIR/nvm.sh" && npm install
 RUN . "$NVM_DIR/nvm.sh" && npm run build
-
-EXPOSE 9000
-
-CMD ["php-fpm"]

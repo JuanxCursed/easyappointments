@@ -1,3 +1,6 @@
+
+# port: 5678
+
 services:
   web: 
     build:
@@ -41,8 +44,8 @@ services:
       - 'mysql_data:/var/lib/mysql'
     environment:
       - MYSQL_ROOT_PASSWORD=${SERVICE_PASSWORD_ROOT_MYSQL}
-      - MYSQL_DATABASE=${SERVICE_DATABASE_MYSQL}
-      - MYSQL_USER=${SERVICE_USER_MYSQL}
+      - MYSQL_DATABASE=easyappointments
+      - MYSQL_USER=user
       - MYSQL_PASSWORD=${SERVICE_PASSWORD_MYSQL}
   swagger-ui:
     platform: linux/amd64
