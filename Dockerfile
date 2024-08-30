@@ -37,4 +37,6 @@ RUN composer install
 RUN . "$NVM_DIR/nvm.sh" && npm install
 RUN . "$NVM_DIR/nvm.sh" && npm run build
 
+EXPOSE 9000
+
 CMD ["php-fpm"]

@@ -6,7 +6,7 @@ services:
     volumes:
       - "easyappointments_data:/var/www/html"
     ports:
-      - '7001:80'
+      - '7001:9000'
     environment:
       - APP_URL=${SERVICE_FQDN_EASYAPPOINTMENTS_80}
       - APP_LANGUAGE=pt-BR
@@ -30,7 +30,7 @@ services:
     depends_on:
       - mysql
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      test: ["CMD", "curl", "-f", "http://localhost:9000"]
       interval: 30s
       timeout: 10s
       retries: 10
