@@ -7,6 +7,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | b
 
 ENV NVM_DIR=/root/.nvm
 RUN . $NVM_DIR/nvm.sh
+RUN . ~/.bashrc
 RUN nvm install 18
 RUN nvm use 18
 
