@@ -13,12 +13,13 @@ services:
       - DB_HOST=mysql
       - DB_PORT=3306
       - DB_USER=user
-      - DB_PASSWORD=${SERIVE_PASSWORD_MYSQL}
+      - DB_PASSWORD=${SERVICE_PASSWORD_MYSQL}
       - DB_NAME=easyappointments
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - GOOGLE_SYNC_FEATURE=${GOOGLE_SYNC_FEATURE:-false}
     command: 
+      - apt update && apt install -y nodejs npm
       - npm install
       - npm run build
   mysql:
@@ -26,10 +27,10 @@ services:
     volumes:
       - 'mysql_data:/var/lib/mysql'
     environment:
-      - MYSQL_ROOT_PASSWORD=${SERIVE_PASSWORD_ROOT_MYSQL}
-      - MYSQL_DATABASE=easyappointments
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=${SERIVE_PASSWORD_MYSQL}
+      - MYSQL_ROOT_PASSWORD=${SERVICE_PASSWORD_ROOT_MYSQL}
+      - MYSQL_DATABASE=${SERVICE_DATABASE_MYSQL}
+      - MYSQL_USER=${SERVICE_USER_MYSQL}
+      - MYSQL_PASSWORD=${SERVICE_PASSWORD_MYSQL}
 
   mailpit:
     image: 'axllent/mailpit:v1.7'
@@ -53,6 +54,7 @@ services:
       - "7003:80"
     volumes:
       - baikal_data:/var/www/html
-      - baikal_data/config:/var/www/baikal/config
-      - baikal_data/data:/var/www/baikal/Specific
-      
+
+volumes:
+  mysql_data:
+  baikal_data:
