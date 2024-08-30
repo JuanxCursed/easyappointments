@@ -4,7 +4,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     volumes:
-      - ".:/var/www/html"
+      - "easyappointments_data:/var/www/html"
     ports:
       - '7001:80'
     environment:
@@ -62,5 +62,6 @@ services:
       - baikal_data:/var/www/html
 
 volumes:
+  easyappointments_data:
   mysql_data:
   baikal_data:
