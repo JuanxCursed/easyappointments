@@ -53,13 +53,24 @@ services:
       - ./openapi.yml:/usr/share/nginx/html/openapi.yml
     environment:
       API_URL: openapi.yml
-  
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 5s
   baikal:
     image: ckulka/baikal:0.9.4-apache
     ports:
       - "7003:80"
     volumes:
       - baikal_data:/var/www/html
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 5s
 
 volumes:
   easyappointments_data:
