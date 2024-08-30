@@ -6,13 +6,14 @@ RUN apt-get update && apt-get install -y \
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
 ENV NVM_DIR=/root/.nvm
-RUN . $NVM_DIR/nvm.sh
-RUN . ~/.bashrc
-RUN nvm install 18
-RUN nvm use 18
+ENV PATH="${NVM_DIR}/versions/node/v18.x.x/bin:${PATH}"
+RUN . "$NVM_DIR/nvm.sh" && \
+    nvm install 18 && \
+    nvm use 18 && \
+    nvm alias default 18
 
 COPY . /var/www/html
 WORKDIR /var/www/html
 
-RUN npm install
-RUN npm run build
+RUN . "$NVM_DIR/nvm.sh" && npm install
+RUN . "$NVM_DIR/nvm.sh" && npm run build
