@@ -26,6 +26,9 @@ RUN . "$NVM_DIR/nvm.sh" && \
 COPY . /var/www/html
 WORKDIR /var/www/html
 
+RUN mkdir -p /var/www/html/storage/app/ssh/keys && \
+    chmod -R 755 /var/www/html/storage
+
 RUN composer install
 
 RUN . "$NVM_DIR/nvm.sh" && npm install

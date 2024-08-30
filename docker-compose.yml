@@ -1,9 +1,10 @@
 services:
   web: 
     build:
-      context: .
+      context: ./
+      dockerfile: Dockerfile
     volumes:
-      - '.:/var/www/html'
+      - ".:/var/www/html"
     ports:
       - '7001:80'
     environment:
@@ -18,6 +19,14 @@ services:
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - GOOGLE_SYNC_FEATURE=${GOOGLE_SYNC_FEATURE:-false}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+      - SMTP_CRYPTO=${SMTP_CRYPTO:-tls}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - FROM_NAME=${FROM_NAME}
+      - FROM_ADDRESS=${FROM_ADDRESS}
+      - REPLY_TO=${REPLY_TO}
     depends_on:
       - mysql
       - mailpit
