@@ -29,9 +29,6 @@ services:
       - REPLY_TO=${REPLY_TO}
     depends_on:
       - mysql
-      - mailpit
-      - swagger-ui
-      - baikal
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:80"]
       interval: 30s
